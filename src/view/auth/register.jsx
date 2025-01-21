@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { Formik } from 'formik';
 
 export default function Register() {
@@ -10,7 +9,7 @@ export default function Register() {
   });
 
 
-  const addPosts = async (body) => {
+  const submitRegister = async (body) => {
     console.log(body);
    await client
       .post('register', body)
@@ -37,8 +36,7 @@ export default function Register() {
        }}
        onSubmit={(values, { setSubmitting }) => {
          setTimeout(async () => {
-           alert(JSON.stringify(values, null, 2));
-           await addPosts(values);
+           await submitRegister(values);
            setSubmitting(false);
          }, 400);
        }}

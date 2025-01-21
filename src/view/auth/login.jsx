@@ -1,6 +1,20 @@
 import { Formik } from 'formik';
+import axios from "axios";
 
 export default function Login() {
+
+  const client = axios.create({
+    baseURL: "http://127.0.0.1:8000/",
+  });
+
+
+  const submitLogin = async (body) => {
+  console.log(body);
+  await client
+      .post('login', body)
+      .then((response) => console.log(response.data))
+      .catch((e) => console.log(e));
+  };
 
   return (
     <>
@@ -15,8 +29,7 @@ export default function Login() {
            }}
            onSubmit={(values, { setSubmitting }) => {
              setTimeout(async () => {
-               alert(JSON.stringify(values, null, 2));
-               await addPosts(values);
+               await submitLogin(values);
                setSubmitting(false);
              }, 400);
            }}
