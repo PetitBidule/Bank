@@ -265,7 +265,7 @@ export default function Register() {
             <Typography sx={{ textAlign: "center" }}>
             Already have an account?{" "}
               <Link
-                href="/material-ui/getting-started/templates/sign-in/"
+                href="/home"
                 variant="body2"
                 sx={{ alignSelf: "center" }}
               >
