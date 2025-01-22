@@ -5,6 +5,7 @@ import App from './App.jsx'
 import Register from './view/auth/register.jsx'
 import Login from './view/auth/login.jsx'
 import { BrowserRouter, Routes, Route } from "react-router";
+  
 
 createRoot(document.getElementById('root')).render(
  <BrowserRouter>
