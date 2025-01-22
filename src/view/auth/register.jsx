@@ -36,7 +36,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
       "hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px",
   }),
 }));
-const SignInContainer = styled(Stack)(({ theme }) => ({
+const SignUpContainer = styled(Stack)(({ theme }) => ({
   height: "90%",
   minHeight: "90%",
   padding: theme.spacing(2),
@@ -115,7 +115,7 @@ export default function Register() {
   //     setPasswordError(true);
   //     setPasswordErrorMessage("Password must be at least 6 characters long.");
   //     isValid = false;
-  //   } else {
+  //   } else { 
   //     setPasswordError(false);
   //     setPasswordErrorMessage("");
   //   }
@@ -126,14 +126,14 @@ export default function Register() {
   return (
     <>
       <CssBaseline enableColorScheme />
-      <SignInContainer direction="column" justifyContent="space-between">
+      <SignUpContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
           <Typography
             component="h1"
             variant="h4"
             sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
           >
-            Sign in
+            Sign up
           </Typography>
           <form
             style={{
@@ -219,34 +219,26 @@ export default function Register() {
               fullWidth
               variant="contained"
             >
-              Sign in
+              Sign up
             </Button>
             <div className="h-5"></div>
 
-            <Link
-              component="button"
-              type="button"
-              variant="body2"
-              sx={{ alignSelf: "center" }}
-            >
-              Forgot your password?
-            </Link>
           </form>
           <Divider>or</Divider>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Typography sx={{ textAlign: "center" }}>
-              Don&apos;t have an account?{" "}
+            Already have an account?{" "}
               <Link
-                href="/material-ui/getting-started/templates/sign-in/"
+                href="/home"
                 variant="body2"
                 sx={{ alignSelf: "center" }}
               >
-                Sign up
+                Sign in
               </Link>
             </Typography>
           </Box>
         </Card>
-      </SignInContainer>
+      </SignUpContainer>
     </>
   );
 }
