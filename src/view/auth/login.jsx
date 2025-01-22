@@ -17,6 +17,8 @@ import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import ForgotPassword from "../../component/ForgotPassword";
 import { useFormik } from "formik";
+import { redirect } from "react-router";
+
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -69,6 +71,8 @@ export default function Login() {
   const client = axios.create({
     baseURL: "http://127.0.0.1:8000/",
   });
+
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -86,7 +90,7 @@ export default function Login() {
     console.log(body);
     await client
       .post('login', body)
-      .then((response) => console.log(response.data))
+      .then((response) => sessionStorage.setItem("token", response.data.token))
       .catch((e) => console.log(e));
   };
 
@@ -110,6 +114,7 @@ export default function Login() {
               gap: 2,
             }}
             method="post"
+            action='/home'
             onSubmit={formik.handleSubmit}
           >
             <FormControl>
@@ -169,7 +174,6 @@ export default function Login() {
               Sign in
             </Button>
             <div className="h-5"></div>
-
           </form>
           <Divider>or</Divider>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>

@@ -8,7 +8,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import OutlinedInput from "@mui/material/OutlinedInput";
 
-function ForgotPassword({ open, handleClose }) {
+function ForgotPassword({ open, handleClose, deleteAccount }) {
   return (
     <Dialog
       open={open}
@@ -22,29 +22,32 @@ function ForgotPassword({ open, handleClose }) {
         sx: { backgroundImage: "none" },
       }}
     >
-      <DialogTitle>Reset password</DialogTitle>
+      <DialogTitle>Delete Account</DialogTitle>
       <DialogContent
         sx={{ display: "flex", flexDirection: "column", gap: 2, width: "100%" }}
       >
         <DialogContentText>
-          Enter your account&apos;s email address, and we&apos;ll send you a
-          link to reset your password.
+          Enter your password for delete Account
         </DialogContentText>
         <OutlinedInput
           autoFocus
           required
           margin="dense"
-          id="email"
-          name="email"
-          label="Email address"
-          placeholder="Email address"
-          type="email"
+          id="Password"
+          name="Password"
+          label="Password"
+          placeholder="Password"
+          type="Password"
           fullWidth
         />
       </DialogContent>
       <DialogActions sx={{ pb: 3, px: 3 }}>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button variant="contained" type="submit">
+        <Button variant="contained" type="submit" onClick={(e) => {
+          console.log(e);
+          // if (e.target.value === )
+          deleteAccount()
+          } }>
           Continue
         </Button>
       </DialogActions>

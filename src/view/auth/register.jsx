@@ -15,7 +15,6 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
-import ForgotPassword from "../../component/ForgotPassword";
 import { useFormik } from "formik";
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -136,6 +135,7 @@ export default function Register() {
             Sign up
           </Typography>
           <form
+          action= "/home"
             style={{
               display: "flex",
               flexDirection: "column",
