@@ -10,6 +10,7 @@ export default function Transaction({ transaction, account }) {
     <div className={`flex flex-col w-full bg-white shadow-md rounded-lg p-6 mb-4 ${isGain ? 'bg-green-100' : isLoss ? 'bg-red-100' : ''}`}>
       <div className="flex flex-row items-center justify-between">
         {isGain && <h2 className="text-green-500 font-bold text-3xl">Gain</h2>}
+
         {isLoss && <h2 className="text-red-500 font-bold text-3xl">Loss</h2>}
 
         {isGain && <p className="text-gray-700 mb-1 text-xl">{transaction.price} Ç</p>}
