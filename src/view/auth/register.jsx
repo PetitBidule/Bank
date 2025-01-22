@@ -70,12 +70,13 @@ export default function Register() {
 
   const formik = useFormik({
     initialValues: {
-      email: "foobar@example.com",
-      firstname: "foobar",
-      lastname: "foobar",
-      password: "foobar",
+      email: "",
+      firstname: "",
+      lastname: "",
+      password: "",
     },
     onSubmit: async (values) => {
+      console.log("Valeurs : ",values)
       setTimeout(async () => {
         await submitRegister(values);
       }, 400);
