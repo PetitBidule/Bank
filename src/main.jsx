@@ -7,6 +7,7 @@ import Login from './view/auth/login.jsx'
 import ViewBankAccounts from './view/viewBankAccounts.jsx'
 import ViewBankAccount from './view/viewBankAccount.jsx'
 import { BrowserRouter, Routes, Route } from "react-router";
+  
 
 createRoot(document.getElementById('root')).render(
  <BrowserRouter>
