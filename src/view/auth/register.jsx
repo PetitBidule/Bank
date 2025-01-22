@@ -59,6 +59,29 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
+const validate = values => {
+  
+  const errors = {};
+  if (values.firstName == "") {
+    errors.firstName = 'Required';
+  } 
+
+  if (values.lastName == "") {
+    errors.lastName = 'Required';
+  }
+
+  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email address';
+  }
+  
+  if (!/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(values.password)) {
+    console.log("invalid password");
+    
+    errors.password = 'Invalid password';
+  }
+  return errors;
+};
+
 export default function Register() {
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState("");
@@ -75,6 +98,7 @@ export default function Register() {
       lastname: "",
       password: "",
     },
+    validate,
     onSubmit: async (values) => {
       console.log("Valeurs : ",values)
       setTimeout(async () => {
@@ -163,6 +187,9 @@ export default function Register() {
                 color={emailError ? "error" : "primary"}
               />
             </FormControl>
+
+            {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+
             <FormControl>
               <FormLabel htmlFor="firstname">firstname</FormLabel>
               <TextField
@@ -177,6 +204,9 @@ export default function Register() {
                 variant="outlined"
               />
             </FormControl>
+
+            {formik.errors.firstName ? <div>{formik.errors.firstName}</div> : null}
+            
             <FormControl>
               <FormLabel htmlFor="lastname">lastname</FormLabel>
               <TextField
@@ -191,6 +221,9 @@ export default function Register() {
                 variant="outlined"
               />
             </FormControl>
+
+            {formik.errors.lastName ? <div>{formik.errors.lastName}</div> : null}
+
             <FormControl>
               <FormLabel htmlFor="password">Password</FormLabel>
               <TextField
@@ -209,6 +242,9 @@ export default function Register() {
                 color={passwordError ? "error" : "primary"}
               />
             </FormControl>
+
+              {formik.errors.password ? <div>{formik.errors.password}</div> : null}
+
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
