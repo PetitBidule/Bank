@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import ForgotPassword from "./ForgotPassword";
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
 
 export default function BankAccount({ account, deleteAccount }) {
   const [open, setOpen] = React.useState(false);
@@ -26,10 +28,16 @@ export default function BankAccount({ account, deleteAccount }) {
           <Link to={`/account/${account.id}/transactions`} className="block">
             Open
           </Link>
-          <ForgotPassword key={account.id} id={account.id} open={open} handleClose={handleClose} />
-          <button  onClick={handleClickOpen} >
-            Delete
-          </button>
+          <ForgotPassword
+            key={account.id}
+            id={account.id}
+            open={open}
+            handleClose={handleClose}
+          />
+          {/* <button onClick={handleClickOpen}>Delete</button> */}
+          <IconButton aria-label="delete" color="error" onClick={handleClickOpen}>
+            <DeleteIcon />
+          </IconButton>
         </div>
       </div>
     </>
