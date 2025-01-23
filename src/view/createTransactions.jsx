@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AppNavbar from "../component/sideBard"
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreateTransactions = () => {
     const [transactionId, setTransactionId] = useState(null);
@@ -22,7 +23,7 @@ const CreateTransactions = () => {
 
     useEffect(() => {
         if (timer === 0 && transactionId) {
-            cancelTransaction();
+            cancelTransaction(transactionId);
         }
     }, [timer, transactionId]);
 
@@ -43,28 +44,37 @@ const CreateTransactions = () => {
 
     const createTransaction = async (values) => {
         try {
-            console.log("values : ", values);
             const response = await axios.post('http://localhost:8000/transactions', values, {
                 headers: {
                     'Authorization': `Bearer ${TOKEN}`
                 }
             });
-            setTransactionId(response.data.transaction_id);
+            const transactionId = response.data.id;
+            console.log("values : ", response.data);
+            setTransactionId(transactionId);
+            toast.success(
+                <div>
+                    Transaction created successfully!
+                    <button onClick={() => cancelTransaction(transactionId)} className="bg-red-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-red-600 mt-2">Cancel Transaction</button>
+                </div>
+            );
         } catch (error) {
             setError(error.response.data.detail);
             console.error('Error creating transaction:', error);
         }
     };
 
-    const cancelTransaction = async () => {
+    const cancelTransaction = async (transactionId) => {
         try {
-            await axios.post('http://localhost:8000/transaction/cancel', { transaction_id: transactionId }, {
+            console.log("Annulation de la transaction avec l'ID:", transactionId);
+            await axios.post(`http://localhost:8000/transaction/cancel?transaction_id=${transactionId}`, {}, {
                 headers: {
                     'Authorization': `Bearer ${TOKEN}`
                 }
             });
             setTransactionId(null);
             setTimer(60);
+            toast.info('Transaction cancelled successfully.');
         } catch (error) {
             console.error('Error canceling transaction:', error);
         }
@@ -79,14 +89,13 @@ const CreateTransactions = () => {
             <form onSubmit={(e) => {
                 e.preventDefault();
                 const formData = new FormData(e.target);
-                var values_data = Object.fromEntries(formData.entries());
-                var values = {
-                    "account_by_id": parseInt(values_data.source_account),
-                    "account_to_id": parseInt(values_data.destination_account),
-                    "balance": parseFloat(values_data.amount),
-                    "motif": values_data.motif
-                  }
-                console.log(values)
+                const values = {
+                    account_by_id: parseInt(formData.get('source_account')),
+                    account_to_id: parseInt(formData.get('destination_account')),
+                    balance: parseFloat(formData.get('amount')),
+                    motif: formData.get('motif')
+                };
+                console.log(values);
                 createTransaction(values);
             }} className="space-y-4">
                 <div>
@@ -102,7 +111,7 @@ const CreateTransactions = () => {
                     <select name="source_account" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
                         <option value="">Select Account</option>
                         {accounts.map(account => (
-                            <option key={account.id} value={parseInt(account.id)}>{account.name}</option>
+                            <option key={account.id} value={account.id}>{account.name}</option>
                         ))}
                     </select>
                 </div>
@@ -111,19 +120,13 @@ const CreateTransactions = () => {
                     <select name="destination_account" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
                         <option value="">Select Account</option>
                         {accounts.map(account => (
-                            <option key={account.id} value={parseInt(account.id)}>{account.name}</option>
+                            <option key={account.id} value={account.id}>{account.name}</option>
                         ))}
                     </select>
                 </div>
                 <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-600">Create</button>
             </form>
-            {transactionId && (
-                <div className="mt-4">
-                    <p className="text-green-500">Transaction created successfully! Transaction ID: {transactionId}</p>
-                    <p className="text-gray-500">Time remaining to cancel: {timer} seconds</p>
-                    <button onClick={cancelTransaction} className="bg-red-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-red-600 mt-2">Cancel Transaction</button>
-                </div>
-            )}
+            <ToastContainer />
         </div>
     );
 };
