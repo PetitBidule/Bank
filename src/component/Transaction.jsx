@@ -14,8 +14,12 @@ export default function Transaction({ transaction, account }) {
     >
       <div className="flex flex-row items-center justify-between">
         {isGain && <h2 className="text-green-500 font-bold text-3xl">Gain</h2>}
-        {isLoss && <h2 className="text-red-500 font-bold text-3xl">Perte</h2>}
-        <p className="text-gray-700 mb-1 text-xl">{transaction.price} Ç</p>
+
+        {isLoss && <h2 className="text-red-500 font-bold text-3xl">Loss</h2>}
+
+        {isGain && <p className="text-gray-700 mb-1 text-xl">{transaction.price} Ç</p>}
+        {isLoss && <p className="text-gray-700 mb-1 text-xl">-{transaction.price} Ç</p>}
+        
         <p className="text-gray-700 mb-1 text-xl">{formattedDate}</p>
         <p className="text-gray-700 mb-1 text-xl">{transaction.description}</p>
         <p className="text-gray-700 italic text-xl">

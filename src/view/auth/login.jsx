@@ -1,6 +1,7 @@
 import { Formik } from 'formik';
 import axios from "axios";
 import * as React from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
@@ -18,7 +19,7 @@ import { styled } from "@mui/material/styles";
 import ForgotPassword from "../../component/ForgotPassword";
 import { useFormik } from "formik";
 import { redirect } from "react-router";
-
+import { set } from 'date-fns';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -62,6 +63,12 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
+const validate = values => {
+  
+  const errors = {};
+  
+  return errors;
+};
 
 export default function Login() {
   const [emailError, setEmailError] = React.useState(false);
@@ -78,6 +85,7 @@ export default function Login() {
       email: "",
       password: "",
     },
+    validate,
     onSubmit: async (values) => {
       console.log("Valeurs : ", values)
       setTimeout(async () => {
@@ -86,12 +94,14 @@ export default function Login() {
     },
   });
 
+  const [error, setError] = useState(null);
+
   const submitLogin = async (body) => {
     console.log(body);
     await client
       .post('login', body)
       .then((response) => sessionStorage.setItem("token", response.data.token))
-      .catch((e) => console.log(e));
+      .catch((e) => setError(e.response.data.detail));
   };
 
   return (
@@ -131,6 +141,7 @@ export default function Login() {
                 required
                 fullWidth
                 onChange={formik.handleChange}
+                value={formik.values.email}
                 variant="outlined"
                 color={emailError ? "error" : "primary"}
               />
@@ -138,8 +149,8 @@ export default function Login() {
             <FormControl>
               <FormLabel htmlFor="password">Password</FormLabel>
               <TextField
-                error={passwordError}
-                helperText={passwordErrorMessage}
+                // error={passwordError}
+                // helperText={passwordErrorMessage}
                 name="password"
                 placeholder="••••••"
                 type="password"
@@ -148,11 +159,14 @@ export default function Login() {
                 autoFocus
                 required
                 fullWidth
+                value={formik.values.password}
                 onChange={formik.handleChange}
                 variant="outlined"
-                color={passwordError ? "error" : "primary"}
+                // color={passwordError ? "error" : "primary"}
               />
             </FormControl>
+              {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+              {formik.errors.password ? <div>{formik.errors.password}</div> : null}
             <Link
               component="button"
               type="button"
@@ -165,6 +179,7 @@ export default function Login() {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
+            <p>{error}</p>
             <div className="h-5"></div>
             <Button
               type="submit"
