@@ -6,10 +6,7 @@ import ViewBankAccounts from "./view/viewBankAccounts.jsx";
 import ViewBankAccount from "./view/viewBankAccount.jsx";
 import { BrowserRouter, Routes, Route } from "react-router";
 import './index.css'
-
 import Dashboard from './view/dashboard.jsx'
-import ViewBankAccounts from './view/viewBankAccounts.jsx'
-import ViewBankAccount from './view/viewBankAccount.jsx'
 import CreateTransactions from './view/createTransactions.jsx'
 import CreateVirements from './view/createVirements.jsx'
 
