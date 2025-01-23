@@ -8,6 +8,7 @@ import './index.css'
 import Dashboard from './view/dashboard.jsx'
 import ViewBankAccounts from './view/viewBankAccounts.jsx'
 import ViewBankAccount from './view/viewBankAccount.jsx'
+import CreateTransactions from './view/createTransactions.jsx'
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/bank_accounts" element={<ViewBankAccounts />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/account/:id/transactions" element={<ViewBankAccount />}/>
+          <Route path="/create_transactions" element={<CreateTransactions />}/>
         </Routes>
       ) : (
         <Routes>
