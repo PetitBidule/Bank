@@ -1,14 +1,39 @@
-import * as React from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import OutlinedInput from "@mui/material/OutlinedInput";
 
-function ForgotPassword({ open, handleClose }) {
+function ForgotPassword({ id, open, handleClose }) {
+  const TOKEN = sessionStorage.getItem("token");
+  const client = axios.create({
+    baseURL: "http://127.0.0.1:8000/",
+  });
+  const [user, setUser] = useState("");
+  const [error, setError] = useState("");
+  const deleteAccount = async (id) => {
+    console.log(id);
+    await client
+      .post(
+        "close_account",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${TOKEN}`,
+          },
+          params: {
+            account_id: id,
+            password: user,
+          },
+        }
+      )
+      .then((response) => console.log(response.data))
+      .catch((e) => console.log(e)
+      );
+  };
   return (
     <Dialog
       open={open}
@@ -22,29 +47,26 @@ function ForgotPassword({ open, handleClose }) {
         sx: { backgroundImage: "none" },
       }}
     >
-      <DialogTitle>Reset password</DialogTitle>
+      <DialogTitle>Delete Account</DialogTitle>
       <DialogContent
         sx={{ display: "flex", flexDirection: "column", gap: 2, width: "100%" }}
       >
         <DialogContentText>
-          Enter your account&apos;s email address, and we&apos;ll send you a
-          link to reset your password.
+          Enter your password for delete Account
         </DialogContentText>
-        <OutlinedInput
-          autoFocus
-          required
-          margin="dense"
-          id="email"
-          name="email"
-          label="Email address"
-          placeholder="Email address"
-          type="email"
-          fullWidth
-        />
+      <input type="password" style={{background: "white"}} id="password" name="password" required minlength="4" onInput={(e) => setUser(e.target.value)} />
+
       </DialogContent>
+      { error != null ? error : "null" }
       <DialogActions sx={{ pb: 3, px: 3 }}>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button variant="contained" type="submit">
+        <Button
+          variant="contained"
+          type="submit"
+          onClick={(e) => {
+            deleteAccount(id);
+          }}
+        >
           Continue
         </Button>
       </DialogActions>
@@ -52,9 +74,5 @@ function ForgotPassword({ open, handleClose }) {
   );
 }
 
-ForgotPassword.propTypes = {
-  handleClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-};
 
 export default ForgotPassword;

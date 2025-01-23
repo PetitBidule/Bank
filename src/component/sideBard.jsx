@@ -1,81 +1,93 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import MuiToolbar from '@mui/material/Toolbar';
-import { tabsClasses } from '@mui/material/Tabs';
-import Typography from '@mui/material/Typography';
-// import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
-// import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-// import SideMenuMobile from './SideMenuMobile';
-// import MenuButton from './MenuButton';
-// import ColorModeIconDropdown from '../../shared-theme/ColorModeIconDropdown';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import MuiToolbar from "@mui/material/Toolbar";
+import { tabsClasses } from "@mui/material/Tabs";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import { Link } from "react-router";
 
 const Toolbar = styled(MuiToolbar)({
-  width: '100%',
-  padding: '12px',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'start',
-  justifyContent: 'center',
-  gap: '12px',
+  width: "100%",
+  padding: "12px",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "start",
+  justifyContent: "center",
+  gap: "12px",
   flexShrink: 0,
   [`& ${tabsClasses.flexContainer}`]: {
-    gap: '8px',
-    p: '8px',
+    gap: "8px",
+    p: "8px",
     pb: 0,
   },
 });
 
 export default function AppNavbar() {
   const [open, setOpen] = React.useState(false);
-
+  const routing = [
+    "/",
+    "/bank_accounts",
+    "/create_virements",
+    "/create_transactions",
+  ];
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 
   return (
-    <AppBar
-      position="fixed"
-      sx={{
-        display: { xs: 'auto', md: 'none' },
-        boxShadow: 0,
-        bgcolor: 'background.paper',
-        backgroundImage: 'none',
-        borderBottom: '1px solid',
-        borderColor: 'divider',
-        top: 'var(--template-frame-height, 0px)',
-      }}
-    >
-      <Toolbar variant="regular">
-        <Stack
-          direction="row"
-          sx={{
-            alignItems: 'center',
-            flexGrow: 1,
-            width: '100%',
-            gap: 1,
-          }}
-        >
-          <Stack
-            direction="row"
-            spacing={1}
-            sx={{ justifyContent: 'center', mr: 'auto' }}
-          >
-            <CustomIcon />
-            <Typography variant="h4" component="h1" sx={{ color: 'text.primary' }}>
-              Dashboard
-            </Typography>
-          </Stack>
-          {/* <ColorModeIconDropdown /> */}
-          {/* <MenuButton aria-label="menu" onClick={toggleDrawer(true)}>
-            <MenuRoundedIcon />
-          </MenuButton> */}
-          {/* <SideMenuMobile open={open} toggleDrawer={toggleDrawer} /> */}
-        </Stack>
-      </Toolbar>
-    </AppBar>
+    <>
+      <AppBar
+        position="fixed"
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      >
+        <Toolbar>
+          <Typography variant="h6" noWrap component="div">
+            Bank Account
+          </Typography>
+        </Toolbar>
+      </AppBar>
+
+      <Drawer
+        variant="permanent"
+        sx={{
+          width: 200,
+          flexShrink: 0,
+          [`& .MuiDrawer-paper`]: { width: 200, boxSizing: "border-box" },
+        }}
+      >
+        {" "}
+        <Toolbar />
+        <Box sx={{ overflow: "auto" }}>
+          <List>
+            {["Dashboard", "Bank Account", "Create Virements ", "Create Transactions"].map(
+              (text, index) => (
+                <Link to={routing[index]}>
+                  <ListItem key={text} disablePadding>
+                    <ListItemButton>
+                      <ListItemIcon>
+                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                      </ListItemIcon>
+                      <ListItemText primary={text} />
+                    </ListItemButton>
+                  </ListItem>
+                </Link>
+              )
+            )}
+          </List>
+          <Divider />
+        </Box>
+      </Drawer>
+    </>
   );
 }
 
@@ -83,20 +95,20 @@ export function CustomIcon() {
   return (
     <Box
       sx={{
-        width: '1.5rem',
-        height: '1.5rem',
-        bgcolor: 'black',
-        borderRadius: '999px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center',
+        width: "1.5rem",
+        height: "1.5rem",
+        bgcolor: "black",
+        borderRadius: "999px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        alignSelf: "center",
         backgroundImage:
-          'linear-gradient(135deg, hsl(210, 98%, 60%) 0%, hsl(210, 100%, 35%) 100%)',
-        color: 'hsla(210, 100%, 95%, 0.9)',
-        border: '1px solid',
-        borderColor: 'hsl(210, 100%, 55%)',
-        boxShadow: 'inset 0 2px 5px rgba(255, 255, 255, 0.3)',
+          "linear-gradient(135deg, hsl(210, 98%, 60%) 0%, hsl(210, 100%, 35%) 100%)",
+        color: "hsla(210, 100%, 95%, 0.9)",
+        border: "1px solid",
+        borderColor: "hsl(210, 100%, 55%)",
+        boxShadow: "inset 0 2px 5px rgba(255, 255, 255, 0.3)",
       }}
     >
       {/* <DashboardRoundedIcon color="inherit" sx={{ fontSize: '1rem' }} /> */}
