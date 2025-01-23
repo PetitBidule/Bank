@@ -1,33 +1,36 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
-import AppNavbar from "../component/sideBard";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import AppNavbar from "../component/sideBard"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import BeneciciaryModal from "../component/BeneciciaryModal";
 
 const CreateVirements = () => {
-  const [virementId, setvirementId] = useState(null);
-  const [timer, setTimer] = useState(60);
-  const [error, setError] = useState(null);
-  const [accounts, setAccounts] = useState([]);
-  const [beneficiaries, setBeneficiaries] = useState([]);
-  const TOKEN = sessionStorage.getItem("token");
 
-  useEffect(() => {
-    let interval;
-    if (virementId) {
-      interval = setInterval(() => {
-        setTimer((prev) => prev - 1);
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [virementId]);
+    const [virementId, setVirementId] = useState(null);
+    const [timer, setTimer] = useState(60);
+    const [error, setError] = useState(null);
+    const [accounts, setAccounts] = useState([]);
+    const [beneficiaries, setBeneficiaries] = useState([]);
+    const TOKEN = sessionStorage.getItem("token");
 
-  useEffect(() => {
-    if (timer === 0 && virementId) {
-      cancelTransaction();
-    }
-  }, [timer, virementId]);
+    useEffect(() => {
+        let interval;
+        if (virementId) {
+            interval = setInterval(() => {
+                setTimer((prev) => prev - 1);
+            }, 1000);
+        }
+        return () => clearInterval(interval);
+    }, [virementId]);
 
+    useEffect(() => {
+        if (timer === 0 && virementId) {
+            cancelTransaction(virementId);
+        }
+    }, [timer, virementId]);
   useEffect(() => {
     // Fetch user accounts
     axios
@@ -45,33 +48,42 @@ const CreateVirements = () => {
       });
   }, [TOKEN]);
 
-  useEffect(() => {
-    // Fetch user accounts
-    axios
-      .get("http://localhost:8000/view_beneficiaries", {
-        headers: {
-          Authorization: `Bearer ${TOKEN}`,
-        },
-      })
-      .then((response) => {
-        setBeneficiaries(response.data);
-      })
-      .catch((error) => {
-        setError("There was an error fetching the accounts!");
-        console.error("There was an error fetching the accounts!", error);
-      });
-  }, [TOKEN]);
+   useEffect(() => {
+        // Fetch user beneficiaries
+        axios.get('http://localhost:8000/view_beneficiaries', {
+            headers: {
+                'Authorization': `Bearer ${TOKEN}`
+            }
+        })
+            .then(response => {
+                setBeneficiaries(response.data);
+            })
+            .catch(error => {
+                setError('There was an error fetching the beneficiaries!');
+                console.error('There was an error fetching the beneficiaries!', error);
+            });
+    }, [TOKEN]);
 
-  const createTransaction = async (values) => {
-    try {
-      console.log("values : ", values);
-      const response = await axios.post(
-        "http://localhost:8000/virements",
-        values,
-        {
-          headers: {
-            Authorization: `Bearer ${TOKEN}`,
-          },
+    const createTransaction = async (values) => {
+        try {
+            const response = await axios.post('http://localhost:8000/virements', values, {
+                headers: {
+                    'Authorization': `Bearer ${TOKEN}`
+                }
+            });
+            const virementId = response.data.id;
+            console.log("data",response.data)
+            setVirementId(virementId);
+            console.log("create id",virementId);
+            toast.success(
+                <div>
+                    Virement created successfully!
+                    <button onClick={() => cancelTransaction(virementId)} className="bg-red-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-red-600 mt-2">Cancel Virement</button>
+                </div>
+            );
+        } catch (error) {
+            setError(error.response.data.detail);
+            console.error('Error creating virement:', error);
         }
       );
       setvirementId(response.data.virement_id);
@@ -81,15 +93,19 @@ const CreateVirements = () => {
     }
   };
 
-  const cancelTransaction = async () => {
-    try {
-      await axios.post(
-        "http://localhost:8000/virement/cancel",
-        { virement_id: virementId },
-        {
-          headers: {
-            Authorization: `Bearer ${TOKEN}`,
-          },
+    const cancelTransaction = async (virementId) => {
+        try {
+            console.log("Annulation du virement avec l'ID:", virementId);
+            await axios.post(`http://localhost:8000/virement/cancel?virement_id=${virementId}`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${TOKEN}`
+                }
+            });
+            setVirementId(null);
+            setTimer(60);
+            toast.info('Virement cancelled successfully.');
+        } catch (error) {
+            console.error('Error canceling virement:', error);
         }
       );
       setvirementId(null);
@@ -103,9 +119,7 @@ const CreateVirements = () => {
   return (
     <div className="container mx-auto p-4">
       <AppNavbar />
-
       <BeneciciaryModal />
-
       <h1 className="text-2xl font-bold mb-4">Create Virements</h1>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <form
@@ -205,6 +219,7 @@ const CreateVirements = () => {
           >
             Cancel Virement
           </button>
+           <ToastContainer />
         </div>
       )}
     </div>
