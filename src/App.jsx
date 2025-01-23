@@ -11,6 +11,7 @@ import Dashboard from './view/dashboard.jsx'
 import ViewBankAccounts from './view/viewBankAccounts.jsx'
 import ViewBankAccount from './view/viewBankAccount.jsx'
 import CreateTransactions from './view/createTransactions.jsx'
+import CreateVirements from './view/createVirements.jsx'
 
 function App() {
   const isAuthenticated = sessionStorage.getItem("token");
@@ -27,17 +28,18 @@ function App() {
             path="/account/:id/transactions"
             element={<ViewBankAccount />}
           />
-          <Route path="*" element={<h1>La Page n'existe pas sale kiwi</h1>} />
+         <Route path="*" element={<h1>The Page doesn't exist, Mr. Kiwi</h1>} />
           <Route path="/bank_accounts" element={<ViewBankAccounts />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/account/:id/transactions" element={<ViewBankAccount />}/>
           <Route path="/create_transactions" element={<CreateTransactions />}/>
+          <Route path="/create_virements" element={<CreateVirements />}/>
         </Routes>
       ) : (
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Login />} />
-          <Route path="*" element={<h1>Non non non</h1>} />
+          <Route path="*" element={<h1>No, no, no</h1>} />
         </Routes>
       )}
     </BrowserRouter>

@@ -7,11 +7,9 @@ export default function Transaction({ transaction, account }) {
   const formattedDate = format(new Date(transaction.date), "dd/MM/yyyy HH:mm");
 
   return (
-    <div
-      className={`flex flex-col w-full bg-white shadow-md rounded-lg p-6 mb-4 ${
-        isGain ? "bg-green-100" : isLoss ? "bg-red-100" : ""
-      }`}
-    >
+
+    <div className={`flex flex-col w-full bg-white shadow-md rounded-lg p-6 mb-4 ${isGain ? 'bg-green-100' : isLoss ? 'bg-red-100' : ''}`}>
+       <p className="text-black text-left">Transaction</p>
       <div className="flex flex-row items-center justify-between">
         {isGain && <h2 className="text-green-500 font-bold text-3xl">Gain</h2>}
 
