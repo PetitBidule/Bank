@@ -20,6 +20,8 @@ import ForgotPassword from "../../component/ForgotPassword";
 import { useFormik } from "formik";
 import { redirect } from "react-router";
 import { set } from 'date-fns';
+import {useNavigate} from 'react-router-dom'
+
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -71,6 +73,7 @@ const validate = values => {
 };
 
 export default function Login() {
+  const navigate = useNavigate()
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState("");
   const [passwordError, setPasswordError] = React.useState(false);
@@ -100,7 +103,7 @@ export default function Login() {
     console.log(body);
     await client
       .post('login', body)
-      .then((response) => sessionStorage.setItem("token", response.data.token))
+      .then((response) => sessionStorage.setItem("token", response.data.token)).then((_) => navigate(0))
       .catch((e) => setError(e.response.data.detail));
   };
 
@@ -195,7 +198,7 @@ export default function Login() {
             <Typography sx={{ textAlign: "center" }}>
               don't have an account?{" "}
               <Link
-                href="/material-ui/getting-started/templates/sign-in/"
+                href="/register"
                 variant="body2"
                 sx={{ alignSelf: "center" }}
               >

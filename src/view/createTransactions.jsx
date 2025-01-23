@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import AppNavbar from "../component/sideBard"
+
 
 const CreateTransactions = () => {
     const [transactionId, setTransactionId] = useState(null);
@@ -70,6 +72,8 @@ const CreateTransactions = () => {
 
     return (
         <div className="container mx-auto p-4">
+                 <AppNavbar />
+            
             <h1 className="text-2xl font-bold mb-4">Create Transaction</h1>
             {error && <p className="text-red-500 mb-4">{error}</p>}
             <form onSubmit={(e) => {

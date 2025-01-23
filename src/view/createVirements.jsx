@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import AppNavbar from "../component/sideBard"
 
 import BeneciciaryModal from '../component/BeneciciaryModal';
 
@@ -93,6 +94,8 @@ const CreateVirements = () => {
 
     return (
         <div className="container mx-auto p-4">
+                 <AppNavbar />
+            
             <BeneciciaryModal />
 
             <h1 className="text-2xl font-bold mb-4">Create Virements</h1>

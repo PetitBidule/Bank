@@ -16,6 +16,8 @@ import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import { useFormik } from "formik";
+import {useNavigate} from 'react-router-dom'
+
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -82,6 +84,7 @@ const validate = values => {
 };
 
 export default function Register() {
+  const navigate = useNavigate()
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState("");
   const [passwordError, setPasswordError] = React.useState(false);
@@ -111,40 +114,11 @@ export default function Register() {
     await client
       .post("register", body)
       .then((response) => {
-        console.log(response.data),
-          sessionStorage.setItem("token", response.data.token);
+          sessionStorage.setItem("token", response.data.token),
+          navigate('/home')
       })
       .catch((e) => console.log(e));
   };
-
-  // const validateInputs = () => {
-  //   const email = document.getElementById("email");
-  //   const password = document.getElementById("password");
-  //   console.log(email.value);
-  //   console.log(password.value);
-
-  //   let isValid = true;
-
-  //   if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-  //     setEmailError(true);
-  //     setEmailErrorMessage("Please enter a valid email address.");
-  //     isValid = false;
-  //   } else {
-  //     setEmailError(false);
-  //     setEmailErrorMessage("");
-  //   }
-
-  //   if (!password.value || password.value.length < 6) {
-  //     setPasswordError(true);
-  //     setPasswordErrorMessage("Password must be at least 6 characters long.");
-  //     isValid = false;
-  //   } else { 
-  //     setPasswordError(false);
-  //     setPasswordErrorMessage("");
-  //   }
-
-  //   return isValid;
-  // };
 
   return (
     <>
@@ -265,7 +239,7 @@ export default function Register() {
             <Typography sx={{ textAlign: "center" }}>
             Already have an account?{" "}
               <Link
-                href="/home"
+                href="/"
                 variant="body2"
                 sx={{ alignSelf: "center" }}
               >
