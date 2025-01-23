@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import AppNavbar from "../component/sideBard"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -85,13 +84,7 @@ const CreateVirements = () => {
             setError(error.response.data.detail);
             console.error('Error creating virement:', error);
         }
-      );
-      setvirementId(response.data.virement_id);
-    } catch (error) {
-      setError(error.response.data.detail);
-      console.error("Error creating transaction:", error);
-    }
-  };
+  }
 
     const cancelTransaction = async (virementId) => {
         try {
@@ -107,13 +100,6 @@ const CreateVirements = () => {
         } catch (error) {
             console.error('Error canceling virement:', error);
         }
-      );
-      setvirementId(null);
-      setTimer(60);
-    } catch (error) {
-      setError("Error canceling transaction:");
-      console.error("Error canceling transaction:", error);
-    }
   };
 
   return (
