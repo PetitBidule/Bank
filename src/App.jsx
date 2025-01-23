@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./App.css";
 import Register from "./view/auth/register.jsx";
 import Login from "./view/auth/login.jsx";

@@ -1,8 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Button from "@mui/material/Button";
 import ForgotPassword from "./ForgotPassword";
+
 export default function BankAccount({ account, deleteAccount }) {
   const [open, setOpen] = React.useState(false);
 
@@ -23,14 +22,15 @@ export default function BankAccount({ account, deleteAccount }) {
         <p className="text-gray-700 mb-1">{account.iban}</p>
         <p className="text-gray-700 mb-4">Balance: {account.balance}</p>
         <p className="text-gray-700 mb-4">{account.type}</p>
-        <Link to={`/account/${account.id}/transactions`} className="block">
-          Nav
-        </Link>
-        <ForgotPassword open={open} handleClose={handleClose} deleteAccount={deleteAccount} />
-
-        <button  onClick={handleClickOpen} >
-          Delete
-        </button>
+        <div className="flex justify-between">
+          <Link to={`/account/${account.id}/transactions`} className="block">
+            Open
+          </Link>
+          <ForgotPassword key={account.id} id={account.id} open={open} handleClose={handleClose} />
+          <button  onClick={handleClickOpen} >
+            Delete
+          </button>
+        </div>
       </div>
     </>
   );

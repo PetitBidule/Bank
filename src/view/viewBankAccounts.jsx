@@ -4,7 +4,6 @@ import BankAccount from "../component/BankAccount";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
-import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
@@ -20,9 +19,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import InputBase from "@mui/material/InputBase";
 
 const ViewBankAccounts = () => {
   const TOKEN = sessionStorage.getItem("token");
@@ -42,12 +39,12 @@ const ViewBankAccounts = () => {
       balance: "foobar",
       type: handleChange,
     },
-    // validationSchema: validationSchema,
     onSubmit: async (values) => {
       alert(JSON.stringify(values, null, 2));
       await submitOpenAccount(values);
     },
   });
+
 
   const submitOpenAccount = async (body) => {
     await client
@@ -70,24 +67,6 @@ const ViewBankAccounts = () => {
       .catch((e) => console.log(e));
   };
 
-  const deleteAccount = async () => {
-    await client
-      .post(
-        "close_account",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${TOKEN}`,
-          },
-          params: {
-            account_id: 16,
-          },
-        }
-      )
-      .then((response) => console.log(response.data))
-      .catch((e) => {console.log(e.response.data.detail), setError(e.response.data.detail)
-      });
-  };
 
   useEffect(() => {
     axios
@@ -117,7 +96,7 @@ const ViewBankAccounts = () => {
         </Toolbar>
       </AppBar>
 
-      {/* <Drawer
+      <Drawer
         variant="permanent"
         sx={{
           width: 200,
@@ -129,7 +108,7 @@ const ViewBankAccounts = () => {
         <Toolbar />
         <Box sx={{ overflow: "auto" }}>
           <List>
-            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+            {["Dashboard", "Bank Account", "Start ", "Profil"].map((text, index) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
@@ -141,20 +120,8 @@ const ViewBankAccounts = () => {
             ))}
           </List>
           <Divider />
-          <List>
-            {["All mail", "Trash", "Spam"].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
         </Box>
-      </Drawer> */}
+      </Drawer>
 
       <div className="container mx-auto p-4 mt-20">
         {accounts.length === 0 ? (
@@ -162,11 +129,10 @@ const ViewBankAccounts = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {accounts.map((account) => (
-              // console.log(account),
               <BankAccount
                 key={account.id}
                 account={account}
-                deleteAccount={deleteAccount}
+                // deleteAccount={deleteAccount}
               />
             ))}
           </div>
@@ -216,7 +182,6 @@ const ViewBankAccounts = () => {
           </Button>
         </form>
         {error ? <div>{error}</div> : null}
-
       </div>
     </div>
   );
