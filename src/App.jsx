@@ -8,7 +8,7 @@ import './index.css'
 import Dashboard from './view/dashboard.jsx'
 import CreateTransactions from './view/createTransactions.jsx'
 import CreateVirements from './view/createVirements.jsx'
-import Profil from './view/profil.jsx'
+import Profil from './view/Profil.jsx'
 
 function App() {
   
