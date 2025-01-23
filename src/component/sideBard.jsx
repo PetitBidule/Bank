@@ -15,6 +15,11 @@ import MailIcon from "@mui/icons-material/Mail";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import { Link } from "react-router";
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 
 const Toolbar = styled(MuiToolbar)({
   width: "100%",
@@ -22,6 +27,7 @@ const Toolbar = styled(MuiToolbar)({
   display: "flex",
   flexDirection: "column",
   alignItems: "start",
+  backgroundColor: "#26de81",
   justifyContent: "center",
   gap: "12px",
   flexShrink: 0,
@@ -39,6 +45,11 @@ export default function AppNavbar() {
     "/bank_accounts",
     "/create_virements",
     "/create_transactions",
+  ];
+   const icons = [
+    <AccountBalanceIcon/> ,
+    <DashboardIcon />,
+    <ReceiptLongIcon />,
   ];
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -60,9 +71,10 @@ export default function AppNavbar() {
       <Drawer
         variant="permanent"
         sx={{
+
           width: 200,
           flexShrink: 0,
-          [`& .MuiDrawer-paper`]: { width: 200, boxSizing: "border-box" },
+          [`& .MuiDrawer-paper`]: { width: 235, boxSizing: "border-box" },
         }}
       >
         {" "}
@@ -75,7 +87,7 @@ export default function AppNavbar() {
                   <ListItem key={text} disablePadding>
                     <ListItemButton>
                       <ListItemIcon>
-                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                        {icons[index]}
                       </ListItemIcon>
                       <ListItemText primary={text} />
                     </ListItemButton>
@@ -85,6 +97,7 @@ export default function AppNavbar() {
             )}
           </List>
           <Divider />
+          
         </Box>
       </Drawer>
     </>
