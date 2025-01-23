@@ -97,7 +97,10 @@ export default function Login() {
     console.log(body);
     await client
       .post('login', body)
-      .then((response) => console.log(response.data))
+      .then((response) => {
+        console.log(response),
+          sessionStorage.setItem("token", response.data.token);
+      })
       .catch((e) => setError(e.response.data.detail));
   };
 

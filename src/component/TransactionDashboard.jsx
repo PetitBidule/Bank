@@ -8,6 +8,7 @@ export default function TransactionDashboard({ transaction }) {
 
   return (
     <div className={`flex flex-col w-full bg-white shadow-md rounded-lg p-6 mb-4 ${isGain ? 'bg-green-100' : isLoss ? 'bg-red-100' : ''}`}>
+       <p className="text-black text-left">Transaction</p>
       <div className="flex flex-row items-center justify-between w-auto">
         {isGain && <h2 className="text-green-500 font-bold text-3xl">Gain</h2>}
         {isLoss && <h2 className="text-red-500 font-bold text-3xl">Loss</h2>}
