@@ -25,5 +25,6 @@ export default function Transaction({ transaction, account }) {
         </p>
       </div>
     </div>
+    
   );
 }
