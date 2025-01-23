@@ -18,6 +18,7 @@ import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import ForgotPassword from "../../component/ForgotPassword";
 import { useFormik } from "formik";
+import { redirect } from "react-router";
 import { set } from 'date-fns';
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -77,6 +78,8 @@ export default function Login() {
   const client = axios.create({
     baseURL: "http://127.0.0.1:8000/",
   });
+
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -97,10 +100,7 @@ export default function Login() {
     console.log(body);
     await client
       .post('login', body)
-      .then((response) => {
-        console.log(response),
-          sessionStorage.setItem("token", response.data.token);
-      })
+      .then((response) => sessionStorage.setItem("token", response.data.token))
       .catch((e) => setError(e.response.data.detail));
   };
 
@@ -124,6 +124,7 @@ export default function Login() {
               gap: 2,
             }}
             method="post"
+            action='/home'
             onSubmit={formik.handleSubmit}
           >
             <FormControl>
