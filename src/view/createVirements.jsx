@@ -15,6 +15,12 @@ const CreateVirements = () => {
     const TOKEN = sessionStorage.getItem("token");
 
     useEffect(() => {
+            if (sessionStorage.getItem("token") == null) {
+              navigate("/");
+            }
+          }, []);
+
+    useEffect(() => {
         let interval;
         if (virementId) {
             interval = setInterval(() => {

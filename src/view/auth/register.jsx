@@ -17,6 +17,7 @@ import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import { useFormik } from "formik";
 import {useNavigate} from 'react-router-dom'
+import { useState, useEffect } from "react";
 
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -92,6 +93,12 @@ export default function Register() {
   const client = axios.create({
     baseURL: "http://127.0.0.1:8000/",
   });
+
+  useEffect(() => {
+    if (sessionStorage.getItem("token") != null) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   const formik = useFormik({
     initialValues: {

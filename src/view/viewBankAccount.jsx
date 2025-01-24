@@ -29,6 +29,12 @@ const ViewBankAccounts = () => {
   const [value2, setValue2] = useState(dayjs("2022-04-17"));
 
   useEffect(() => {
+          if (sessionStorage.getItem("token") == null) {
+            navigate("/");
+          }
+        }, []);
+
+  useEffect(() => {
     axios
       .get(`http://localhost:8000/view_account?account_id=${id}`, {
         params: {
