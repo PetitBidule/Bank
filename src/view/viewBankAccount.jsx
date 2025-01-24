@@ -16,6 +16,7 @@ import { format } from "date-fns";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import Button from "@mui/material/Button";
 import SideBard from "../component/sideBard";
+import img from "../assets/logo.png"
 
 const ViewBankAccounts = () => {
   const { id } = useParams();
@@ -113,7 +114,7 @@ const ViewBankAccounts = () => {
       ) {
         data.push([
           values[i].motif,
-          values[i].price,
+          values[i].price.toFixed(2),
           format(new Date(values[i].date), "dd/MM/yyyy HH:mm"),
         ]);
       }
@@ -125,7 +126,7 @@ const ViewBankAccounts = () => {
       ) {
         data.push([
           virement[i].motif,
-          virement[i].price,
+          virement[i].price.toFixed(2),
           format(new Date(virement[i].date), "dd/MM/yyyy HH:mm"),
         ]);
       }
@@ -137,7 +138,7 @@ const ViewBankAccounts = () => {
       ) {
         data.push([
           deposit[i].motif,
-          deposit[i].price,
+          deposit[i].price.toFixed(2),
           format(new Date(deposit[i].date), "dd/MM/yyyy HH:mm"),
         ]);
       }
@@ -152,6 +153,7 @@ const ViewBankAccounts = () => {
       return;
     }
     pdf.text("Relevé de compte", 150, 10);
+    pdf.addImage(img, 'PNG', 153, 10, 40, 20);
     pdf.line(13, 25, 150, 26);
 
     pdf.text("Relevé des opérations", 13, 85);

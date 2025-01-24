@@ -98,11 +98,6 @@ const Dashboard = () => {
   return (
     <>
       <AppNavbar />
-      <div className="pt-10" >
-        
-       <br></br>
-       zini
-      </div>
       <div className="flex">
         <LineChart
           xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
