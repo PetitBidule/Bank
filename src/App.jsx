@@ -9,6 +9,7 @@ import Dashboard from "./view/dashboard.jsx";
 import CreateTransactions from "./view/createTransactions.jsx";
 import CreateVirements from "./view/createVirements.jsx";
 import PrivateRoute from "./component/PrivateRoute";
+import Profil from './view/Profil.jsx'
 
 function App() {
   return (
