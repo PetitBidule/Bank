@@ -12,6 +12,7 @@ import AppNavbar from "../component/sideBard"
 const ViewBankAccounts = () => {
   const TOKEN = sessionStorage.getItem("token");
   const [accounts, setAccounts] = useState([]);
+  const [user, setUser] = useState([]);
   const [type, setType] = useState("");
   const [error, setError] = useState(null);
   const handleChange = (event) => {
@@ -35,25 +36,53 @@ const ViewBankAccounts = () => {
 
 
   const submitOpenAccount = async (body) => {
-    await client
-      .post(
-        "open_account",
-        {
-          user_id: 1,
-          type_id: type == "Autre" ? 3 : type == "Courant" ? 1 : 2,
+    try {
+      const userResponse = await client.get("me", {
+        headers: {
+          'Authorization': `Bearer ${TOKEN}`
+        }
+      });
+      const userId = userResponse.data.id;
+      setUser(userResponse.data);
+
+      try {
+        const accountResponse = await client.post("open_account", {
+          user_id: userId,
+          type_id: type === "Autre" ? 3 : type === "Courant" ? 1 : 2,
           name: body.name,
           balance: body.balance,
           is_closed: false,
-        },
-        {
+        }, {
           headers: {
-            Authorization: `Bearer ${TOKEN}`,
-          },
-        }
-      )
-      .then((response) => console.log(response.data))
-      .catch((e) => console.log(e));
+            'Authorization': `Bearer ${TOKEN}`
+          }
+        });
+
+        console.log(accountResponse.data);
+      } catch (error) {
+        console.error("Error opening account:", error);
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
   };
+
+  useEffect(() => {
+    const fetchAccounts = async () => {
+      try {
+        const response = await client.get("view_accounts", {
+          headers: {
+            'Authorization': `Bearer ${TOKEN}`
+          }
+        });
+        setAccounts(response.data);
+      } catch (error) {
+        console.error("There was an error fetching the accounts!", error);
+      }
+    };
+
+    fetchAccounts();
+  }, []);
 
 
   useEffect(() => {
@@ -73,7 +102,7 @@ const ViewBankAccounts = () => {
 
   return (
     <div>
-     <AppNavbar />
+      <AppNavbar />
       <div className="container mx-auto p-4 mt-20">
         {accounts.length === 0 ? (
           <p className="text-center text-gray-500">Pas de comptes</p>
@@ -83,7 +112,7 @@ const ViewBankAccounts = () => {
               <BankAccount
                 key={account.id}
                 account={account}
-                // deleteAccount={deleteAccount}
+              // deleteAccount={deleteAccount}
               />
             ))}
           </div>
@@ -120,7 +149,7 @@ const ViewBankAccounts = () => {
             id="type"
             value={type}
             onChange={handleChange}
-            // input={<BootstrapInput />}
+          // input={<BootstrapInput />}
           >
             <MenuItem value="">
               <em>None</em>
