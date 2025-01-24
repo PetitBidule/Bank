@@ -169,18 +169,6 @@ export default function Login() {
             </FormControl>
               {formik.errors.email ? <div>{formik.errors.email}</div> : null}
               {formik.errors.password ? <div>{formik.errors.password}</div> : null}
-            <Link
-              component="button"
-              type="button"
-              variant="body2"
-              sx={{ alignSelf: "center" }}
-            >
-              Forgot your password?
-            </Link>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <p>{error}</p>
             <div className="h-5"></div>
             <Button

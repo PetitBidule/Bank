@@ -42,7 +42,7 @@ export default function BeneciciaryModal() {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <div className='bg-black p-4 rounded-md shadow-md'>
+                <div className='bg-black p-4 rounded-md shadow-md bg-white'>
                     <h1 className="text-xl font-bold mb-4">Add a beneficiary</h1>
                     {error && <p className="text-red-500 mb-4">{error}</p>}
                     <form onSubmit={formik.handleSubmit} className="space-y-4">
@@ -54,7 +54,7 @@ export default function BeneciciaryModal() {
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.iban}
-                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
                             />
                             {formik.touched.iban && formik.errors.iban ? (
                                 <div className="text-red-500 text-sm">{formik.errors.iban}</div>
