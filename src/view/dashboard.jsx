@@ -20,6 +20,13 @@ const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("all");
   const TOKEN = sessionStorage.getItem("token");
+
+  useEffect(() => {
+      if (sessionStorage.getItem("token") == null) {
+        navigate("/");
+      }
+    }, []);
+
   useEffect(() => {
     if (!TOKEN) {
       setError("No token found");

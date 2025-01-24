@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import axios from "axios";
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
@@ -81,6 +81,12 @@ export default function Login() {
   const client = axios.create({
     baseURL: "http://127.0.0.1:8000/",
   });
+
+  useEffect(() => {
+    if (sessionStorage.getItem("token") != null) {
+      navigate("/dashboard");
+    }
+  }, []);
 
 
   const formik = useFormik({

@@ -12,6 +12,13 @@ const CreateTransactions = () => {
   const [error, setError] = useState(null);
   const [accounts, setAccounts] = useState([]);
   const TOKEN = sessionStorage.getItem("token");
+
+  useEffect(() => {
+        if (sessionStorage.getItem("token") == null) {
+          navigate("/");
+        }
+      }, []);
+
   const client = axios.create({
     baseURL: "http://127.0.0.1:8000/",
   });

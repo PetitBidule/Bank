@@ -15,6 +15,13 @@ const ViewBankAccounts = () => {
   const [user, setUser] = useState([]);
   const [type, setType] = useState("");
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+          if (sessionStorage.getItem("token") == null) {
+            navigate("/");
+          }
+        }, []);
+        
   const handleChange = (event) => {
     setType(event.target.value);
   };
