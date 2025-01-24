@@ -123,15 +123,15 @@ const CreateVirements = () => {
             }} className="space-y-4">
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Amount</label>
-                    <input type="number" name="amount" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
+                    <input type="number" name="amount" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white" required />
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Motif</label>
-                    <input type="text" name="motif" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required />
+                    <input type="text" name="motif" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white" required />
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Source Account</label>
-                    <select name="source_account" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+                    <select name="source_account" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white" required>
                         <option value="">Select Account</option>
                         {accounts.map(account => (
                             <option key={account.id} value={account.id}>{account.name}</option>
@@ -140,7 +140,7 @@ const CreateVirements = () => {
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Destination Account</label>
-                    <select name="destination_account" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+                    <select name="destination_account" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white" required>
                         <option value="">Select Account</option>
                         {beneficiaries.map(beneficiary => (
                             <option key={beneficiary.account_beneficiary} value={beneficiary.account_beneficiary}>{beneficiary.bank_account_beneficiary_iban} ({beneficiary.bank_account_beneficiary_name})</option>
