@@ -10,16 +10,15 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import { Link } from "react-router";
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import Button from "@mui/material/Button";
+import {useNavigate} from 'react-router-dom'
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Toolbar = styled(MuiToolbar)({
   width: "100%",
@@ -39,6 +38,7 @@ const Toolbar = styled(MuiToolbar)({
 });
 
 export default function AppNavbar() {
+  const navigate = useNavigate()
   const [open, setOpen] = React.useState(false);
   const routing = [
     "/",
@@ -46,8 +46,8 @@ export default function AppNavbar() {
     "/create_virements",
     "/create_transactions",
   ];
-   const icons = [
-    <AccountBalanceIcon/> ,
+  const icons = [
+    <AccountBalanceIcon />,
     <DashboardIcon />,
     <ReceiptLongIcon />,
   ];
@@ -59,7 +59,10 @@ export default function AppNavbar() {
     <>
       <AppBar
         position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          marginBottom: "100px",
+        }}
       >
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
@@ -71,7 +74,6 @@ export default function AppNavbar() {
       <Drawer
         variant="permanent"
         sx={{
-
           width: 200,
           flexShrink: 0,
           [`& .MuiDrawer-paper`]: { width: 235, boxSizing: "border-box" },
@@ -81,23 +83,30 @@ export default function AppNavbar() {
         <Toolbar />
         <Box sx={{ overflow: "auto" }}>
           <List>
-            {["Dashboard", "Bank Account", "Create Virements ", "Create Transactions"].map(
-              (text, index) => (
-                <Link to={routing[index]}>
-                  <ListItem key={text} disablePadding>
-                    <ListItemButton>
-                      <ListItemIcon>
-                        {icons[index]}
-                      </ListItemIcon>
-                      <ListItemText primary={text} />
-                    </ListItemButton>
-                  </ListItem>
-                </Link>
-              )
-            )}
+            {[
+              "Dashboard",
+              "Bank Account",
+              "Create Virements ",
+              "Create Transactions",
+            ].map((text, index) => (
+              <Link to={routing[index]}>
+                <ListItem key={text} disablePadding>
+                  <ListItemButton>
+                    <ListItemIcon>{icons[index]}</ListItemIcon>
+                    <ListItemText primary={text} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            ))}
           </List>
           <Divider />
-          
+          <Button
+            variant="contained"
+            endIcon={<LogoutIcon />}
+            onClick={function(e) {sessionStorage.removeItem("token"), navigate("/")} }
+          >
+            Log Out
+          </Button>
         </Box>
       </Drawer>
     </>

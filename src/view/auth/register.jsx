@@ -75,7 +75,7 @@ const validate = values => {
     errors.email = 'Invalid email address';
   }
   
-  if (!/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(values.password)) {
+  if (!/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(values.password)) {
     console.log("invalid password");
     
     errors.password = 'Invalid password';
@@ -113,10 +113,9 @@ export default function Register() {
     console.log(body);
     await client
       .post("register", body)
-      .then((response) => {
+      .then((response) => 
           sessionStorage.setItem("token", response.data.token),
-          navigate('/home')
-      })
+      ).then((_) => navigate("/dashboard"))
       .catch((e) => console.log(e));
   };
 
