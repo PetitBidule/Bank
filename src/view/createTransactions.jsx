@@ -215,10 +215,9 @@ const CreateTransactions = () => {
             required
           >
             <option value="none">None</option>
-            <option value="5S">5 sec</option>
-            <option value="1D">1 jours</option>
-            <option value="1S">1 semaine</option>
-            <option value="1M">1 mois</option>
+            <option value="5">5 sec</option>
+            <option value="86400">1 jours</option>
+            <option value="604800">1 semaine</option>
           </select>
         </div>
         <button
