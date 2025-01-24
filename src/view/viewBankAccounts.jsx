@@ -24,12 +24,11 @@ const ViewBankAccounts = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: "foobar@example.com",
-      balance: "foobar",
+      name: "",
+      balance: "",
       type: handleChange,
     },
     onSubmit: async (values) => {
-      alert(JSON.stringify(values, null, 2));
       await submitOpenAccount(values);
     },
   });
@@ -56,9 +55,8 @@ const ViewBankAccounts = () => {
           headers: {
             'Authorization': `Bearer ${TOKEN}`
           }
-        });
-
-        console.log(accountResponse.data);
+        }).then((response) => setAccounts([...accounts], response.data) )
+        
       } catch (error) {
         console.error("Error opening account:", error);
       }
@@ -82,7 +80,7 @@ const ViewBankAccounts = () => {
     };
 
     fetchAccounts();
-  }, []);
+  }, [accounts]);
 
 
   useEffect(() => {
@@ -151,9 +149,6 @@ const ViewBankAccounts = () => {
             onChange={handleChange}
           // input={<BootstrapInput />}
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
             <MenuItem value="Courant">Courant</MenuItem>
             <MenuItem value="Epargne">Epargne</MenuItem>
           </Select>
