@@ -15,6 +15,7 @@ import "dayjs/locale/fr";
 import { format } from "date-fns";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import Button from "@mui/material/Button";
+import SideBard from "../component/sideBard";
 
 const ViewBankAccounts = () => {
   const { id } = useParams();
@@ -164,6 +165,7 @@ const ViewBankAccounts = () => {
 
   return (
     <>
+    <SideBard />
       <div className="bg-gray-800 text-white p-4 fixed top-0 left-0 right-0 z-10">
         <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center">
           <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">

@@ -131,7 +131,7 @@ const CreateVirements = () => {
           <input
             type="number"
             name="amount"
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
             required
           />
         </div>
@@ -142,7 +142,7 @@ const CreateVirements = () => {
           <input
             type="text"
             name="motif"
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
             required
           />
         </div>
@@ -152,7 +152,7 @@ const CreateVirements = () => {
           </label>
           <select
             name="source_account"
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
             required
           >
             <option value="">Select Account</option>
@@ -169,7 +169,7 @@ const CreateVirements = () => {
           </label>
           <select
             name="destination_account"
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 bg-white"
             required
           >
             <option value="">Select Account</option>

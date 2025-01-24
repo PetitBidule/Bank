@@ -131,7 +131,7 @@ const Dashboard = () => {
           <select
             value={parseInt(accountId)}
             onChange={(e) => setAccountId(parseInt(e.target.value))}
-            className="border p-2 mb-4 w-full"
+            className="border p-2 mb-4 w-full bg-white"
           >
             <option value="">All Accounts</option>
             {accounts.map((account) => (
@@ -147,7 +147,7 @@ const Dashboard = () => {
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="border p-2 mb-4 w-full"
+            className="border p-2 mb-4 w-full bg-white"
           />
         </div>
         <div className="pr-3">
@@ -158,7 +158,7 @@ const Dashboard = () => {
               setFilter(e.target.value);
               console.log("Selected filter: ", e.target.value); // Ajoutez ce console.log pour vérifier la valeur sélectionnée
             }}
-            className="border p-2 mb-4 w-full"
+            className="border p-2 mb-4 w-full bg-white"
           >
             <option value="all">All</option>
             <option value="gain">Gain</option>

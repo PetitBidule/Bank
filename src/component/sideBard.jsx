@@ -19,6 +19,7 @@ import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import Button from "@mui/material/Button";
 import {useNavigate} from 'react-router-dom'
 import LogoutIcon from "@mui/icons-material/Logout";
+import logo from "../assets/logo.png";
 
 const Toolbar = styled(MuiToolbar)({
   width: "100%",
@@ -41,14 +42,14 @@ export default function AppNavbar() {
   const navigate = useNavigate()
   const [open, setOpen] = React.useState(false);
   const routing = [
-    "/",
+    "/dashboard",
     "/bank_accounts",
     "/create_virements",
     "/create_transactions",
   ];
   const icons = [
-    <AccountBalanceIcon />,
     <DashboardIcon />,
+    <AccountBalanceIcon />,
     <ReceiptLongIcon />,
   ];
   const toggleDrawer = (newOpen) => () => {
@@ -65,9 +66,7 @@ export default function AppNavbar() {
         }}
       >
         <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            Bank Account
-          </Typography>
+          <img src={logo} className="h-15 w-20"></img>
         </Toolbar>
       </AppBar>
 
