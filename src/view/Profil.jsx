@@ -177,16 +177,6 @@ export default function Profil() {
                         </FormControl>
                         {formik.errors.password ? <div>{formik.errors.password}</div> : null}
                         {formik.errors.newpassword ? <div>{formik.errors.newpassword}</div> : null}
-                        <Link
-                            component="button"
-                            type="button"
-                            variant="body2"
-                            sx={{ alignSelf: "center" }}
-                        >
-                            Forgot your password?
-                        </Link>
-                        <p>{error}</p>
-                        <div className="h-5"></div>
                         <Button
                             type="submit"
                             fullWidth
