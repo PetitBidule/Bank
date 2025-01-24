@@ -103,7 +103,7 @@ export default function Login() {
     console.log(body);
     await client
       .post('login', body)
-      .then((response) => sessionStorage.setItem("token", response.data.token)).then((_) => navigate(0))
+      .then((response) => sessionStorage.setItem("token", response.data.token)).then((_) => navigate("/dashboard"))
       .catch((e) => setError(e.response.data.detail));
   };
 
@@ -127,7 +127,6 @@ export default function Login() {
               gap: 2,
             }}
             method="post"
-            action='/home'
             onSubmit={formik.handleSubmit}
           >
             <FormControl>

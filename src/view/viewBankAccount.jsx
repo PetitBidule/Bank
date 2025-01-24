@@ -13,6 +13,9 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
 import { format } from "date-fns";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import Button from "@mui/material/Button";
+import SideBard from "../component/sideBard";
 
 const ViewBankAccounts = () => {
   const { id } = useParams();
@@ -93,13 +96,14 @@ const ViewBankAccounts = () => {
       });
   }, []);
 
-  const handleDownloadPDF = (values) => {
-    // const dateStart = format(new Date(value.$d), "dd/MM/yyyy");
-    // const dateEnd = format(new Date(value2.$d), "dd/MM/yyyy");
-
+  // download pdf
+  const handleDownloadPDF = (values, virement, deposit) => {
     const pdf = new jsPDF();
     const headers = [["Date", "Débit", "Motif"]];
     let data = [];
+    console.log(data);
+    console.log(values, "values");
+
     pdf.setFontSize(16);
 
     for (let i = 0; i < values.length; i++) {
@@ -114,7 +118,31 @@ const ViewBankAccounts = () => {
         ]);
       }
     }
-    if (!!data) {
+    for (let i = 0; i < virement.length; i++) {
+      if (
+        new Date(virement[i].date) >= new Date(value.$d) &&
+        new Date(virement[i].date) <= new Date(value2.$d)
+      ) {
+        data.push([
+          virement[i].motif,
+          virement[i].price,
+          format(new Date(virement[i].date), "dd/MM/yyyy HH:mm"),
+        ]);
+      }
+    }
+    for (let i = 0; i < deposit.length; i++) {
+      if (
+        new Date(deposit[i].date) >= new Date(value.$d) &&
+        new Date(deposit[i].date) <= new Date(value2.$d)
+      ) {
+        data.push([
+          deposit[i].motif,
+          deposit[i].price,
+          format(new Date(deposit[i].date), "dd/MM/yyyy HH:mm"),
+        ]);
+      }
+    }
+    if (data.length == 0) {
       pdf.text(
         "Il n'y a pas de transactions sur cet intervalle de date",
         50,
@@ -137,6 +165,7 @@ const ViewBankAccounts = () => {
 
   return (
     <>
+    <SideBard />
       <div className="bg-gray-800 text-white p-4 fixed top-0 left-0 right-0 z-10">
         <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center">
           <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
@@ -147,25 +176,30 @@ const ViewBankAccounts = () => {
           </div>
         </div>
       </div>
-      <div className="mt-5">
+      <div className="mt-10 flex">
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
-            <DemoContainer components={["DatePicker", "DatePicker"]}>
+          <DemoContainer components={["DatePicker", "DatePicker"]}>
             <DatePicker
-                label="Date Début"
-                value={value}
-                onChange={(newValue) => setValue(newValue)}
+              label="Date Début"
+              value={value}
+              onChange={(newValue) => setValue(newValue)}
             />
             <DatePicker
-                label="Date Fin"
-                value={value2}
-                onChange={(newValue) => setValue2(newValue)}
+              label="Date Fin"
+              value={value2}
+              onChange={(newValue) => setValue2(newValue)}
             />
-            </DemoContainer>
+          </DemoContainer>
         </LocalizationProvider>
+        <Button
+          variant="contained"
+          endIcon={<PictureAsPdfIcon />}
+          onClick={(e) => handleDownloadPDF(transactions, virements, deposits)}
+        >
+          Download
+        </Button>
       </div>
-      <button onClick={(e) => handleDownloadPDF(transactions)}>
-        Download PDF
-      </button>
+
       <div className="container mx-auto p-4 mt-20">
         {virements.length === 0 ? (
           <p className="text-center text-gray-500">No virement</p>
