@@ -20,6 +20,8 @@ import Button from "@mui/material/Button";
 import {useNavigate} from 'react-router-dom'
 import LogoutIcon from "@mui/icons-material/Logout";
 import logo from "../assets/logo.png";
+import Person2Icon from '@mui/icons-material/Person2';
+import PaidIcon from '@mui/icons-material/Paid';
 
 const Toolbar = styled(MuiToolbar)({
   width: "100%",
@@ -46,11 +48,14 @@ export default function AppNavbar() {
     "/bank_accounts",
     "/create_virements",
     "/create_transactions",
+    "/profil",
   ];
   const icons = [
     <DashboardIcon />,
     <AccountBalanceIcon />,
     <ReceiptLongIcon />,
+    <PaidIcon />,
+    <Person2Icon/>
   ];
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -87,6 +92,7 @@ export default function AppNavbar() {
               "Bank Account",
               "Create Virements ",
               "Create Transactions",
+              "Profil"
             ].map((text, index) => (
               <Link to={routing[index]}>
                 <ListItem key={text} disablePadding>
